@@ -1,0 +1,855 @@
+.
+├── ai.cpp
+├── ai.hpp
+├── CMakeLists.txt
+├── CMakeModules
+│   ├── FindEGL.cmake
+│   ├── FindPackageHandleStandardArgs.cmake
+│   ├── FindSDL2_gfx.cmake
+│   ├── FindSDL2_image.cmake
+│   └── FindSDL2_ttf.cmake
+├── data
+│   ├── databases
+│   │   └── default
+│   │       └── images_teams
+│   │           └── primeradivision
+│   │               ├── fcbarcelona_kit_02.bmp
+│   │               ├── fcbarcelona_logo.bmp
+│   │               ├── realmadrid_kit_02.bmp
+│   │               └── realmadrid_logo.bmp
+│   └── media
+│       ├── animations
+│       │   ├── ballcontrol
+│       │   │   ├── idle
+│       │   │   │   ├── 000_accel.anim
+│       │   │   │   ├── 000_accel_close.anim
+│       │   │   │   ├── 000_accel_far.anim
+│       │   │   │   ├── 000.anim
+│       │   │   │   ├── 020_accel_far.anim
+│       │   │   │   ├── 020.anim
+│       │   │   │   ├── 045_accel.anim
+│       │   │   │   ├── 045.anim
+│       │   │   │   ├── 090_accel.anim
+│       │   │   │   ├── 090_accel_far.anim
+│       │   │   │   ├── 090.anim
+│       │   │   │   ├── 135_accel.anim
+│       │   │   │   ├── 135.anim
+│       │   │   │   ├── 180_accel.anim
+│       │   │   │   └── 180.anim
+│       │   │   ├── sprint
+│       │   │   │   ├── 000.anim
+│       │   │   │   ├── 000_close.anim
+│       │   │   │   ├── 000_decel.anim
+│       │   │   │   ├── 020_decel.anim
+│       │   │   │   ├── 020_right_nondecel_stretch.anim
+│       │   │   │   ├── 045_decel.anim
+│       │   │   │   ├── 090_decel_decel.anim
+│       │   │   │   ├── 135_decel_decel_decel.anim
+│       │   │   │   ├── 180_decel_decel_decel.anim
+│       │   │   │   └── lastditch
+│       │   │   │       └── 020_decel_stretch.anim
+│       │   │   └── walk
+│       │   │       ├── 000_accel.anim
+│       │   │       ├── 000_accel_ballright.anim
+│       │   │       ├── 000_accel_close.anim
+│       │   │       ├── 000.anim
+│       │   │       ├── 000_close.anim
+│       │   │       ├── 000_decel_decel.anim
+│       │   │       ├── 020_accel.anim
+│       │   │       ├── 020_accel_close.anim
+│       │   │       ├── 020_decel_decel.anim
+│       │   │       ├── 020_left.anim
+│       │   │       ├── 020_left_close.anim
+│       │   │       ├── 045_accel_2step.anim
+│       │   │       ├── 045.anim
+│       │   │       ├── 045_decel_decel.anim
+│       │   │       ├── 090_decel_decel.anim
+│       │   │       ├── 090_strongfoot.anim
+│       │   │       ├── 135_decel_decel.anim
+│       │   │       ├── 180_decel.anim
+│       │   │       ├── 180_decel_decel.anim
+│       │   │       └── lastditch
+│       │   │           └── 045_left_decel_far.anim
+│       │   ├── base.anim.util
+│       │   ├── base.inverse.anim.util
+│       │   ├── celebration
+│       │   │   ├── happy_extreme
+│       │   │   │   └── 000_decel_decel.anim
+│       │   │   ├── happy_normal
+│       │   │   │   └── 000.anim
+│       │   │   └── sad_normal
+│       │   │       └── 000.anim
+│       │   ├── deflect
+│       │   │   ├── idle
+│       │   │   │   ├── 000_ground_holdball.anim
+│       │   │   │   ├── 000_high_deflect_close.anim
+│       │   │   │   ├── 000_high_deflect_far.anim
+│       │   │   │   ├── 000_high_deflect_sideclose.anim
+│       │   │   │   ├── 000_high_holdball.anim
+│       │   │   │   ├── 000_kneeheight_holdball.anim
+│       │   │   │   ├── 000_trunk_holdball.anim
+│       │   │   │   ├── 090_ground_deflect_far.anim
+│       │   │   │   ├── 090_ground_holdball_close.anim
+│       │   │   │   ├── 090_high_deflect_far.anim
+│       │   │   │   ├── 090_midheight_deflect_far.anim
+│       │   │   │   ├── 090_midheight_holdball_close.anim
+│       │   │   │   └── 090_trunk_deflect_far.anim
+│       │   │   ├── sprint
+│       │   │   │   ├── 000_ground_deflect_far.anim
+│       │   │   │   ├── 000_ground_holdball.anim
+│       │   │   │   └── 000_ground_holdball_ballside.anim
+│       │   │   └── walk
+│       │   │       ├── 000_ground_holdball_close.anim
+│       │   │       ├── 000_kneeheight_holdball_close.anim
+│       │   │       ├── 000_trunk_holdball_close.anim
+│       │   │       ├── 045_kneeheight_deflect_far.anim
+│       │   │       └── angled
+│       │   │           ├── 090_ground_deflect_far.anim
+│       │   │           ├── 090_ground_holdball_close.anim
+│       │   │           ├── 090_high_deflect_far.anim
+│       │   │           ├── 090_high_holdball_close.anim
+│       │   │           ├── 090_midheight_deflect_far.anim
+│       │   │           ├── 090_midheight_holdball_close.anim
+│       │   │           ├── 090_trunk_deflect_far.anim
+│       │   │           └── 090_trunk_holdball_close.anim
+│       │   ├── highpass
+│       │   │   ├── dribble
+│       │   │   │   └── 000.anim
+│       │   │   ├── idle
+│       │   │   │   ├── 000_long.anim
+│       │   │   │   ├── 020.anim
+│       │   │   │   ├── 090.anim
+│       │   │   │   └── special
+│       │   │   │       ├── 000_throw.anim
+│       │   │   │       └── 045_throw.anim
+│       │   │   ├── sprint
+│       │   │   │   ├── 090.anim
+│       │   │   │   └── 090_slide.anim
+│       │   │   └── walk
+│       │   │       ├── 000.anim
+│       │   │       ├── 000_long.anim
+│       │   │       ├── 045_air_left.anim
+│       │   │       ├── 080.anim
+│       │   │       ├── 090_long.anim
+│       │   │       ├── 180_turn.anim
+│       │   │       └── special
+│       │   │           └── 000_throw.anim
+│       │   ├── interfere
+│       │   │   ├── idle
+│       │   │   │   ├── 000_front.anim
+│       │   │   │   ├── 000_header_jump.anim
+│       │   │   │   └── 000_side.anim
+│       │   │   ├── sprint
+│       │   │   │   ├── 000_header_jump.anim
+│       │   │   │   └── 000_reach.anim
+│       │   │   └── walk
+│       │   │       ├── 000_decel_side_behind.anim
+│       │   │       └── 000_stretch.anim
+│       │   ├── movement
+│       │   │   ├── dribble
+│       │   │   │   ├── 045_decel.anim
+│       │   │   │   ├── 090_decel.anim
+│       │   │   │   ├── 135.anim
+│       │   │   │   ├── 135_decel.anim
+│       │   │   │   ├── 180_decel.anim
+│       │   │   │   └── angled
+│       │   │   │       ├── D045.anim
+│       │   │   │       ├── D045_decel.anim
+│       │   │   │       ├── D135_045_decel.anim
+│       │   │   │       ├── D135_decel.anim
+│       │   │   │       ├── D135_to_D045_045.anim
+│       │   │   │       └── newangles
+│       │   │   │           ├── D000_to_D045_045.anim
+│       │   │   │           ├── D000_to_D045_090_left.anim
+│       │   │   │           ├── D000_to_D045.anim
+│       │   │   │           ├── D000_to_D135_090.anim
+│       │   │   │           ├── D000_to_D135_135.anim
+│       │   │   │           ├── D045_to_D135.anim
+│       │   │   │           ├── D135_045.anim
+│       │   │   │           ├── D135_to_D045_000_accel.anim
+│       │   │   │           ├── D135_to_D045_000.anim
+│       │   │   │           ├── D135_to_D045_045_accel.anim
+│       │   │   │           ├── D135_to_D045_045_left.anim
+│       │   │   │           └── D135_to_D-135_left.anim
+│       │   │   ├── idle
+│       │   │   │   ├── 000_accel.anim
+│       │   │   │   ├── 000_idlelevel1.anim
+│       │   │   │   ├── 045_accel.anim
+│       │   │   │   ├── 090_accel.anim
+│       │   │   │   ├── 135_accel.anim
+│       │   │   │   ├── 180_accel.anim
+│       │   │   │   └── angled
+│       │   │   │       ├── D045_090_accel.anim
+│       │   │   │       ├── D045_135_accel.anim
+│       │   │   │       └── D045_180_accel.anim
+│       │   │   ├── sprint
+│       │   │   │   ├── 000_decel_decel_decel_todo.anim
+│       │   │   │   ├── 000_idlelevel1.anim
+│       │   │   │   ├── 135_decel_decel_decel.anim
+│       │   │   │   └── newangles
+│       │   │   │       ├── D000_to_D045_045_left_decel_decel.anim
+│       │   │   │       ├── D000_to_D045_decel.anim
+│       │   │   │       └── D045_decel_left.anim
+│       │   │   └── walk
+│       │   │       ├── 000_accel.anim
+│       │   │       ├── 045_accel.anim
+│       │   │       ├── 045.anim
+│       │   │       ├── 090_left_decel.anim
+│       │   │       ├── 135_decel.anim
+│       │   │       └── angled
+│       │   │           ├── D045_to_D000_accel.anim
+│       │   │           └── newangles
+│       │   │               ├── D000_to_D045.anim
+│       │   │               ├── D045_045.anim
+│       │   │               ├── D045_to_D000_045_accel.anim
+│       │   │               ├── D045_to_D000_accel.anim
+│       │   │               ├── D045_to_D000.anim
+│       │   │               └── D045_to_D135_decel.anim
+│       │   ├── movement_special
+│       │   │   ├── dribble
+│       │   │   │   ├── angled
+│       │   │   │   │   └── special
+│       │   │   │   │       ├── D000_to_D135_180_holdball.anim
+│       │   │   │   │       ├── D135_decel_holdball.anim
+│       │   │   │   │       ├── D135_holdball.anim
+│       │   │   │   │       ├── D135_left_holdball.anim
+│       │   │   │   │       └── D135_to_D000_holdball.anim
+│       │   │   │   └── special
+│       │   │   │       ├── 000_decel_holdball.anim
+│       │   │   │       ├── 000_holdball.anim
+│       │   │   │       └── 090_decel_holdball.anim
+│       │   │   └── idle
+│       │   │       └── special
+│       │   │           ├── 000_accel_holdball.anim
+│       │   │           ├── 000_back_to_front_holdball.anim
+│       │   │           ├── 000_holdball.anim
+│       │   │           ├── 000_stand_up_from_back.anim
+│       │   │           ├── 000_stand_up_from_front.anim
+│       │   │           ├── 000_stand_up_from_front_holdball.anim
+│       │   │           ├── 045_holdball.anim
+│       │   │           └── 135_accel_holdball.anim
+│       │   ├── pass
+│       │   │   ├── dribble
+│       │   │   │   ├── 180_turn.anim
+│       │   │   │   ├── lastditch
+│       │   │   │   │   ├── 090_decel_ballside.anim
+│       │   │   │   │   └── 090_decel_ballside_otherside.anim
+│       │   │   │   └── nonbase
+│       │   │   │       └── 090_highball.anim
+│       │   │   ├── idle
+│       │   │   │   ├── 000.anim
+│       │   │   │   ├── 090.anim
+│       │   │   │   ├── 180.anim
+│       │   │   │   ├── nonbase
+│       │   │   │   │   ├── 000_header.anim
+│       │   │   │   │   ├── 000_header_jump_backwards.anim
+│       │   │   │   │   ├── 000_header_jump_forwards.anim
+│       │   │   │   │   ├── 070_header_jump.anim
+│       │   │   │   │   ├── 090_header.anim
+│       │   │   │   │   ├── 090_kneeheight.anim
+│       │   │   │   │   └── 135_header_jump.anim
+│       │   │   │   └── special
+│       │   │   │       ├── 000_throw.anim
+│       │   │   │       └── 045_throw.anim
+│       │   │   ├── sprint
+│       │   │   │   ├── 000.anim
+│       │   │   │   ├── 045.anim
+│       │   │   │   ├── 090.anim
+│       │   │   │   ├── 180.anim
+│       │   │   │   ├── lastditch
+│       │   │   │   │   ├── 000_reach.anim
+│       │   │   │   │   └── 090_slide.anim
+│       │   │   │   └── nonbase
+│       │   │   │       ├── 000_header_jump.anim
+│       │   │   │       └── 020_ballside.anim
+│       │   │   └── walk
+│       │   │       ├── 000.anim
+│       │   │       ├── 000_short.anim
+│       │   │       ├── 045.anim
+│       │   │       ├── 090.anim
+│       │   │       ├── 090_short.anim
+│       │   │       ├── 135.anim
+│       │   │       ├── lastditch
+│       │   │       │   ├── 040_reach.anim
+│       │   │       │   ├── 040_side_reach.anim
+│       │   │       │   └── 090_reach.anim
+│       │   │       ├── nonbase
+│       │   │       │   ├── 000_kneeheight.anim
+│       │   │       │   ├── D045_pass00_header_headheight.anim
+│       │   │       │   └── D045_pass90_header_headheight.anim
+│       │   │       └── special
+│       │   │           └── 000_throw.anim
+│       │   ├── shot
+│       │   │   ├── dribble
+│       │   │   │   ├── 090_zidane.anim
+│       │   │   │   └── angled
+│       │   │   │       └── D135.anim
+│       │   │   ├── idle
+│       │   │   │   ├── 020.anim
+│       │   │   │   ├── 090.anim
+│       │   │   │   └── 180_bicycle.anim
+│       │   │   ├── sprint
+│       │   │   │   ├── 000_headerdive.anim
+│       │   │   │   ├── 010_close.anim
+│       │   │   │   ├── 010_short_bit_longer.anim
+│       │   │   │   ├── 020_left.anim
+│       │   │   │   ├── 030.anim
+│       │   │   │   └── 090_2step.anim
+│       │   │   └── walk
+│       │   │       ├── 010_short.anim
+│       │   │       ├── 010_short_bit_longer.anim
+│       │   │       ├── 090_2step.anim
+│       │   │       ├── 180_turn.anim
+│       │   │       └── angled
+│       │   │           ├── D045_20_below.anim
+│       │   │           └── D045_20_header.anim
+│       │   ├── sliding
+│       │   │   ├── dribble
+│       │   │   │   └── angled
+│       │   │   │       └── D135_decel.anim
+│       │   │   ├── idle
+│       │   │   │   ├── 000.anim
+│       │   │   │   └── 090.anim
+│       │   │   ├── sprint
+│       │   │   │   ├── 000.anim
+│       │   │   │   └── 000_ballside.anim
+│       │   │   └── walk
+│       │   │       └── 000.anim
+│       │   ├── special
+│       │   │   └── 000_showcard.anim
+│       │   ├── straight.anim.util
+│       │   ├── templates
+│       │   │   ├── dribbleD000.anim
+│       │   │   ├── dribbleD045.anim
+│       │   │   ├── dribbleD045_left.anim
+│       │   │   ├── dribbleD135.anim
+│       │   │   ├── dribbleD135_left.anim
+│       │   │   ├── idleD000.anim
+│       │   │   ├── sprintD000.anim
+│       │   │   ├── walkD000.anim
+│       │   │   ├── walkD045.anim
+│       │   │   └── walkD045_left.anim
+│       │   ├── trap
+│       │   │   ├── idle
+│       │   │   │   ├── 000_IB000.anim
+│       │   │   │   ├── 090_IB000_accel_optional.anim
+│       │   │   │   ├── 135_IB000_accel_left_shallowangle.anim
+│       │   │   │   ├── 135_IB000_accel_right.anim
+│       │   │   │   ├── 135_IB000.anim
+│       │   │   │   └── highballs
+│       │   │   │       ├── 000_chest.anim
+│       │   │   │       ├── 000_chest_jump.anim
+│       │   │   │       ├── 000_crotch.anim
+│       │   │   │       ├── 000_knee.anim
+│       │   │   │       ├── 020_chest_fromabove.anim
+│       │   │   │       └── 135_chest.anim
+│       │   │   ├── sprint
+│       │   │   │   ├── 000_D000_IB090_decel.anim
+│       │   │   │   ├── highballs
+│       │   │   │   │   ├── 000_chest.anim
+│       │   │   │   │   └── 000_fromside_kneeheight.anim
+│       │   │   │   └── lastditch
+│       │   │   │       ├── 000_decel_decel_decel_stretch.anim
+│       │   │   │       └── 000_decel_decel_stretch.anim
+│       │   │   └── walk
+│       │   │       ├── 000_D000_IB000_decel_decel.anim
+│       │   │       ├── 000_D000_IB000_short.anim
+│       │   │       ├── 000_D000_IB090.anim
+│       │   │       ├── 000_D000_IB090_decel_decel.anim
+│       │   │       ├── 000_D045_IB090.anim
+│       │   │       ├── 000_D045_IB090_decel_decel.anim
+│       │   │       ├── 000_D045_IB135.anim
+│       │   │       ├── 000_D135_IB135_decel_decel.anim
+│       │   │       ├── 135_D000_IB000_decel_decel.anim
+│       │   │       ├── 135_D045_IB090_decel_decel.anim
+│       │   │       ├── 135_D045_IB135_decel_decel.anim
+│       │   │       ├── 135_D135_IB135_decel_decel.anim
+│       │   │       ├── highballs
+│       │   │       │   ├── 000_chest_ballfrombelow.anim
+│       │   │       │   ├── 000_chest_jump_decel.anim
+│       │   │       │   ├── 000_control_highball_decel.anim
+│       │   │       │   ├── 000_knee.anim
+│       │   │       │   ├── 135_chest.anim
+│       │   │       │   ├── D045_chest.anim
+│       │   │       │   ├── D045_to_D000_decel_chest.anim
+│       │   │       │   ├── D135_chest_jump_180.anim
+│       │   │       │   └── D135_chest_jump_decel.anim
+│       │   │       └── lastditch
+│       │   │           ├── 000_D000_IB090_decel_decel_lastditch.anim
+│       │   │           ├── 000_D000_IB090_decel_short_lastditch.anim
+│       │   │           └── 000_frombehind_decel.anim
+│       │   └── trip
+│       │       ├── trip_t1
+│       │       │   ├── idle
+│       │       │   │   ├── 000_protectback.anim
+│       │       │   │   ├── 000_protectfront.anim
+│       │       │   │   └── 000_protectside.anim
+│       │       │   ├── sprint
+│       │       │   │   ├── 000_decel.anim
+│       │       │   │   ├── 000_sidebump.anim
+│       │       │   │   └── 045_decel.anim
+│       │       │   └── walk
+│       │       │       ├── 000_protectback.anim
+│       │       │       ├── 000_protectfront.anim
+│       │       │       └── 028_D045_sidebump.anim
+│       │       ├── trip_t2
+│       │       │   ├── dribble
+│       │       │   │   ├── 000_accel.anim
+│       │       │   │   ├── D135_000bump.anim
+│       │       │   │   └── D135_180bump.anim
+│       │       │   ├── idle
+│       │       │   │   ├── 000_000.anim
+│       │       │   │   ├── 000_090.anim
+│       │       │   │   └── 000_180.anim
+│       │       │   └── sprint
+│       │       │       └── side_behind.anim
+│       │       └── trip_t3
+│       │           ├── sprint
+│       │           │   ├── 000.anim
+│       │           │   └── 045.anim
+│       │           └── walk
+│       │               └── 000_000.anim
+│       ├── blunted
+│       │   └── gui2
+│       │       └── black.bmp
+│       ├── menu
+│       │   ├── backgrounds
+│       │   │   └── megabackground01.bmp
+│       │   ├── league.bmp
+│       │   ├── main
+│       │   │   └── loading01.bmp
+│       │   ├── radar
+│       │   │   ├── ball.bmp
+│       │   │   ├── p1.bmp
+│       │   │   ├── p2.bmp
+│       │   │   └── radar.bmp
+│       │   └── scoreboard_bg.bmp
+│       ├── objects
+│       │   ├── balls
+│       │   │   ├── ball.bmp
+│       │   │   ├── generic.ase
+│       │   │   └── generic.object
+│       │   ├── lighting
+│       │   │   └── generic.object
+│       │   ├── menu
+│       │   │   └── background01.ase
+│       │   ├── officials
+│       │   │   ├── redcard.ase
+│       │   │   ├── redcard.bmp
+│       │   │   ├── yellowcard.ase
+│       │   │   └── yellowcard.bmp
+│       │   ├── players
+│       │   │   ├── fullbody2.object
+│       │   │   ├── fullbody.object
+│       │   │   ├── hairstyles
+│       │   │   │   ├── bald.ase
+│       │   │   │   ├── long01.ase
+│       │   │   │   ├── long02.ase
+│       │   │   │   ├── medium01.ase
+│       │   │   │   ├── medium02.ase
+│       │   │   │   ├── short01.ase
+│       │   │   │   └── short02.ase
+│       │   │   ├── models
+│       │   │   │   ├── foot.ase
+│       │   │   │   ├── fullbody2.ase
+│       │   │   │   ├── fullbody.ase
+│       │   │   │   ├── head.ase
+│       │   │   │   ├── lowerarm.ase
+│       │   │   │   ├── lowerleg.ase
+│       │   │   │   ├── pelvis.ase
+│       │   │   │   ├── trunk.ase
+│       │   │   │   ├── upperarm.ase
+│       │   │   │   └── upperleg.ase
+│       │   │   ├── player.object
+│       │   │   └── textures
+│       │   │       ├── arm_normal.bmp
+│       │   │       ├── goalie_kit.bmp
+│       │   │       ├── hair
+│       │   │       │   ├── black.bmp
+│       │   │       │   ├── blonde.bmp
+│       │   │       │   ├── brown.bmp
+│       │   │       │   ├── darkblonde.bmp
+│       │   │       │   └── red.bmp
+│       │   │       ├── kit_template.bmp
+│       │   │       ├── kit_UVWnormal.bmp
+│       │   │       ├── knee_normal.bmp
+│       │   │       ├── referee_kit.bmp
+│       │   │       ├── shoe.bmp
+│       │   │       ├── shoe_sole.bmp
+│       │   │       ├── skin01.bmp
+│       │   │       ├── skin02.bmp
+│       │   │       ├── skin03.bmp
+│       │   │       ├── skin04.bmp
+│       │   │       └── skin.bmp
+│       │   └── stadiums
+│       │       ├── goals.ase
+│       │       ├── goals.object
+│       │       ├── test
+│       │       │   ├── abstractads.bmp
+│       │       │   ├── floor01wall.bmp
+│       │       │   ├── floor01wall_selfillum.bmp
+│       │       │   ├── floor01wall_specular.bmp
+│       │       │   ├── floor02wall.bmp
+│       │       │   ├── floor02wall_specular.bmp
+│       │       │   ├── hekje.bmp
+│       │       │   ├── lightgrey.bmp
+│       │       │   ├── pitch.ase
+│       │       │   ├── pitchonly.object
+│       │       │   ├── test.ase
+│       │       │   └── test.object
+│       │       └── white.bmp
+│       ├── shaders
+│       │   ├── ambient.frag
+│       │   ├── ambient.vert
+│       │   ├── lighting.frag
+│       │   ├── lighting.vert
+│       │   ├── noise.bmp
+│       │   ├── noise_colorful.bmp
+│       │   ├── overlay.frag
+│       │   ├── overlay.vert
+│       │   ├── postprocess.frag
+│       │   ├── postprocess.vert
+│       │   ├── simple.frag
+│       │   ├── simple.vert
+│       │   ├── zphase.frag
+│       │   └── zphase.vert
+│       └── textures
+│           ├── adboards
+│           │   ├── ad_3xblast01.bmp
+│           │   ├── ad_altfunc01.bmp
+│           │   ├── ad_blauwprint01.bmp
+│           │   ├── ad_bleep01.bmp
+│           │   ├── ad_brokenbread01.bmp
+│           │   ├── ad_groningen01.bmp
+│           │   ├── ad_indietopia01.bmp
+│           │   ├── ad_omeganorth01.bmp
+│           │   ├── ad_polygon01.bmp
+│           │   ├── ad_polygon02.bmp
+│           │   ├── ad_polygon_flyingdutchman02.bmp
+│           │   ├── ad_polygon_jigsawHD02.bmp
+│           │   ├── ad_stark01.bmp
+│           │   ├── ad_stark02.bmp
+│           │   ├── ad_tenshu01.bmp
+│           │   └── ad_your_ad_here.bmp
+│           ├── almost_black.bmp
+│           ├── almost_white.bmp
+│           ├── black.bmp
+│           ├── concrete
+│           │   ├── concrete.wall01a.bmp
+│           │   ├── concrete.wall01_normal.bmp
+│           │   └── concrete.wall01_specular.bmp
+│           ├── orange.bmp
+│           ├── pitch
+│           │   ├── overlay.bmp
+│           │   ├── pitch_01.bmp
+│           │   ├── pitch_02.bmp
+│           │   ├── pitch_03.bmp
+│           │   ├── pitch_04.bmp
+│           │   ├── pitch_normal_01.bmp
+│           │   ├── pitch_normal_02.bmp
+│           │   ├── pitch_normal_03.bmp
+│           │   ├── pitch_normal_04.bmp
+│           │   ├── pitch_specular_01.bmp
+│           │   ├── pitch_specular_02.bmp
+│           │   ├── pitch_specular_03.bmp
+│           │   ├── pitch_specular_04.bmp
+│           │   └── seamlessgrass08.bmp
+│           ├── stadium
+│           │   ├── ad_placeholder.bmp
+│           │   ├── crowd01.bmp
+│           │   ├── crowd01_normal.bmp
+│           │   ├── goalnetting.bmp
+│           │   └── greenish_floor.bmp
+│           └── white.bmp
+├── __init__.py
+├── LICENSE
+├── README.md
+├── sources.cmake
+├── src
+│   ├── ai
+│   │   ├── ai_keyboard.cpp
+│   │   └── ai_keyboard.hpp
+│   ├── base
+│   │   ├── geometry
+│   │   │   ├── aabb.cpp
+│   │   │   ├── aabb.hpp
+│   │   │   ├── line.cpp
+│   │   │   ├── line.hpp
+│   │   │   ├── plane.cpp
+│   │   │   ├── plane.hpp
+│   │   │   ├── triangle.cpp
+│   │   │   ├── triangle.hpp
+│   │   │   ├── trianglemeshutils.cpp
+│   │   │   └── trianglemeshutils.hpp
+│   │   ├── log.cpp
+│   │   ├── log.hpp
+│   │   ├── math
+│   │   │   ├── bluntmath.cpp
+│   │   │   ├── bluntmath.hpp
+│   │   │   ├── matrix3.cpp
+│   │   │   ├── matrix3.hpp
+│   │   │   ├── matrix4.cpp
+│   │   │   ├── matrix4.hpp
+│   │   │   ├── quaternion.cpp
+│   │   │   ├── quaternion.hpp
+│   │   │   ├── vector3.cpp
+│   │   │   └── vector3.hpp
+│   │   ├── properties.cpp
+│   │   ├── properties.hpp
+│   │   ├── sdl_surface.cpp
+│   │   ├── sdl_surface.hpp
+│   │   ├── utils.cpp
+│   │   └── utils.hpp
+│   ├── blunted.cpp
+│   ├── blunted.hpp
+│   ├── cmake
+│   │   ├── backtrace.cpp
+│   │   ├── backtrace.h
+│   │   ├── file.cpp
+│   │   ├── file.h
+│   │   ├── SDL2_rotozoom.h
+│   │   ├── wrap_SDL_endian.h
+│   │   ├── wrap_SDL.h
+│   │   ├── wrap_SDL_keyboard.h
+│   │   ├── wrap_SDL_keycode.h
+│   │   ├── wrap_SDL_surface.h
+│   │   └── wrap_SDL_ttf.h
+│   ├── data
+│   │   ├── matchdata.cpp
+│   │   ├── matchdata.hpp
+│   │   ├── playerdata.cpp
+│   │   ├── playerdata.hpp
+│   │   ├── teamdata.cpp
+│   │   └── teamdata.hpp
+│   ├── defines.cpp
+│   ├── defines.hpp
+│   ├── gamedefines.cpp
+│   ├── gamedefines.hpp
+│   ├── game_env.cpp
+│   ├── game_env.hpp
+│   ├── gametask.cpp
+│   ├── gametask.hpp
+│   ├── gfootball_actions.h
+│   ├── hid
+│   │   └── ihidevice.hpp
+│   ├── loaders
+│   │   ├── aseloader.cpp
+│   │   ├── aseloader.hpp
+│   │   ├── imageloader.cpp
+│   │   └── imageloader.hpp
+│   ├── main.cpp
+│   ├── main.hpp
+│   ├── managers
+│   │   └── resourcemanager.hpp
+│   ├── menu
+│   │   ├── ingame
+│   │   │   ├── gamepage.cpp
+│   │   │   ├── gamepage.hpp
+│   │   │   ├── radar.cpp
+│   │   │   ├── radar.hpp
+│   │   │   ├── scoreboard.cpp
+│   │   │   └── scoreboard.hpp
+│   │   ├── menutask.cpp
+│   │   ├── menutask.hpp
+│   │   ├── pagefactory.cpp
+│   │   ├── pagefactory.hpp
+│   │   └── startmatch
+│   │       ├── loadingmatch.cpp
+│   │       └── loadingmatch.hpp
+│   ├── misc
+│   │   ├── empty.cpp
+│   │   ├── hungarian.cpp
+│   │   ├── hungarian.h
+│   │   ├── perlin.cpp
+│   │   └── perlin.h
+│   ├── onthepitch
+│   │   ├── AIsupport
+│   │   │   ├── AIfunctions.cpp
+│   │   │   ├── AIfunctions.hpp
+│   │   │   ├── mentalimage.cpp
+│   │   │   └── mentalimage.hpp
+│   │   ├── ball.cpp
+│   │   ├── ball.hpp
+│   │   ├── humangamer.cpp
+│   │   ├── humangamer.hpp
+│   │   ├── match.cpp
+│   │   ├── match.hpp
+│   │   ├── officials.cpp
+│   │   ├── officials.hpp
+│   │   ├── player
+│   │   │   ├── controller
+│   │   │   │   ├── elizacontroller.cpp
+│   │   │   │   ├── elizacontroller.hpp
+│   │   │   │   ├── humancontroller.cpp
+│   │   │   │   ├── humancontroller.hpp
+│   │   │   │   ├── icontroller.cpp
+│   │   │   │   ├── icontroller.hpp
+│   │   │   │   ├── playercontroller.cpp
+│   │   │   │   ├── playercontroller.hpp
+│   │   │   │   ├── refereecontroller.cpp
+│   │   │   │   ├── refereecontroller.hpp
+│   │   │   │   └── strategies
+│   │   │   │       ├── offtheball
+│   │   │   │       │   ├── default_def.cpp
+│   │   │   │       │   ├── default_def.hpp
+│   │   │   │       │   ├── default_mid.cpp
+│   │   │   │       │   ├── default_mid.hpp
+│   │   │   │       │   ├── default_off.cpp
+│   │   │   │       │   ├── default_off.hpp
+│   │   │   │       │   ├── goalie_default.cpp
+│   │   │   │       │   └── goalie_default.hpp
+│   │   │   │       ├── strategy.cpp
+│   │   │   │       └── strategy.hpp
+│   │   │   ├── humanoid
+│   │   │   │   ├── animcollection.cpp
+│   │   │   │   ├── animcollection.hpp
+│   │   │   │   ├── humanoidbase.cpp
+│   │   │   │   ├── humanoidbase.hpp
+│   │   │   │   ├── humanoid.cpp
+│   │   │   │   ├── humanoid.hpp
+│   │   │   │   ├── humanoid_utils.cpp
+│   │   │   │   └── humanoid_utils.hpp
+│   │   │   ├── playerbase.cpp
+│   │   │   ├── playerbase.hpp
+│   │   │   ├── player.cpp
+│   │   │   ├── player.hpp
+│   │   │   ├── playerofficial.cpp
+│   │   │   └── playerofficial.hpp
+│   │   ├── proceduralpitch.cpp
+│   │   ├── proceduralpitch.hpp
+│   │   ├── referee.cpp
+│   │   ├── referee.hpp
+│   │   ├── teamAIcontroller.cpp
+│   │   ├── teamAIcontroller.hpp
+│   │   ├── team.cpp
+│   │   └── team.hpp
+│   ├── scene
+│   │   ├── iscene.hpp
+│   │   ├── object.cpp
+│   │   ├── objectfactory.cpp
+│   │   ├── objectfactory.hpp
+│   │   ├── object.hpp
+│   │   ├── objects
+│   │   │   ├── camera.cpp
+│   │   │   ├── camera.hpp
+│   │   │   ├── geometry.cpp
+│   │   │   ├── geometry.hpp
+│   │   │   ├── image2d.cpp
+│   │   │   ├── image2d.hpp
+│   │   │   ├── light.cpp
+│   │   │   ├── light.hpp
+│   │   │   ├── skybox.cpp
+│   │   │   └── skybox.hpp
+│   │   ├── resources
+│   │   │   ├── geometrydata.cpp
+│   │   │   ├── geometrydata.hpp
+│   │   │   ├── surface.cpp
+│   │   │   └── surface.hpp
+│   │   ├── scene2d
+│   │   │   ├── scene2d.cpp
+│   │   │   └── scene2d.hpp
+│   │   ├── scene3d
+│   │   │   ├── node.cpp
+│   │   │   ├── node.hpp
+│   │   │   ├── scene3d.cpp
+│   │   │   └── scene3d.hpp
+│   │   ├── scene.cpp
+│   │   └── scene.hpp
+│   ├── systems
+│   │   ├── graphics
+│   │   │   ├── graphics_object.cpp
+│   │   │   ├── graphics_object.hpp
+│   │   │   ├── graphics_scene.cpp
+│   │   │   ├── graphics_scene.hpp
+│   │   │   ├── graphics_system.cpp
+│   │   │   ├── graphics_system.hpp
+│   │   │   ├── graphics_task.cpp
+│   │   │   ├── graphics_task.hpp
+│   │   │   ├── objects
+│   │   │   │   ├── graphics_camera.cpp
+│   │   │   │   ├── graphics_camera.hpp
+│   │   │   │   ├── graphics_geometry.cpp
+│   │   │   │   ├── graphics_geometry.hpp
+│   │   │   │   ├── graphics_light.cpp
+│   │   │   │   ├── graphics_light.hpp
+│   │   │   │   ├── graphics_overlay2d.cpp
+│   │   │   │   └── graphics_overlay2d.hpp
+│   │   │   ├── rendering
+│   │   │   │   ├── interface_renderer3d.hpp
+│   │   │   │   ├── opengl_renderer3d.cpp
+│   │   │   │   ├── opengl_renderer3d.hpp
+│   │   │   │   ├── r3d_messages.hpp
+│   │   │   │   └── sdl_glfuncs.h
+│   │   │   └── resources
+│   │   │       ├── texture.cpp
+│   │   │       ├── texture.hpp
+│   │   │       ├── vertexbuffer.cpp
+│   │   │       └── vertexbuffer.hpp
+│   │   ├── isystem.hpp
+│   │   └── isystemobject.hpp
+│   ├── types
+│   │   ├── command.cpp
+│   │   ├── command.hpp
+│   │   ├── interpreter.hpp
+│   │   ├── loader.hpp
+│   │   ├── material.hpp
+│   │   ├── messagequeue.hpp
+│   │   ├── observer.cpp
+│   │   ├── observer.hpp
+│   │   ├── refcounted.cpp
+│   │   ├── refcounted.hpp
+│   │   ├── resource.hpp
+│   │   ├── spatial.cpp
+│   │   ├── spatial.hpp
+│   │   └── subject.hpp
+│   ├── utils
+│   │   ├── animation.cpp
+│   │   ├── animationextensions
+│   │   │   ├── animationextension.hpp
+│   │   │   ├── footballanimationextension.cpp
+│   │   │   └── footballanimationextension.hpp
+│   │   ├── animation.hpp
+│   │   ├── gui2
+│   │   │   ├── guitask.cpp
+│   │   │   ├── guitask.hpp
+│   │   │   ├── page.cpp
+│   │   │   ├── page.hpp
+│   │   │   ├── style.cpp
+│   │   │   ├── style.hpp
+│   │   │   ├── view.cpp
+│   │   │   ├── view.hpp
+│   │   │   ├── widgets
+│   │   │   │   ├── caption.cpp
+│   │   │   │   ├── caption.hpp
+│   │   │   │   ├── frame.cpp
+│   │   │   │   ├── frame.hpp
+│   │   │   │   ├── image.cpp
+│   │   │   │   ├── image.hpp
+│   │   │   │   ├── root.cpp
+│   │   │   │   └── root.hpp
+│   │   │   ├── windowmanager.cpp
+│   │   │   └── windowmanager.hpp
+│   │   ├── objectloader.cpp
+│   │   ├── objectloader.hpp
+│   │   ├── orbitcamera.cpp
+│   │   ├── orbitcamera.hpp
+│   │   ├── splitgeometry.cpp
+│   │   ├── splitgeometry.hpp
+│   │   ├── xmlloader.cpp
+│   │   └── xmlloader.hpp
+│   ├── utils.cpp
+│   └── utils.hpp
+├── tree
+└── vcpkg_manifests
+    ├── py3.10
+    │   └── vcpkg.json
+    ├── py3.6
+    │   └── vcpkg.json
+    ├── py3.7
+    │   └── vcpkg.json
+    ├── py3.8
+    │   └── vcpkg.json
+    └── py3.9
+        └── vcpkg.json
+
+169 directories, 684 files
